@@ -1,0 +1,45 @@
+{
+  "name": "rentlook",
+  "version": "1.0.0",
+  "description": "Front-end of Renteree website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html --port 3000",
+    "lint": "npm run lint:eslint && npm run lint:style",
+    "lint:eslint": "eslint ./src --fix --ext js,jsx ./src",
+    "lint:style": "npx stylelint \"**/*.scss\"",
+    "test": "echo \"Error: no test specified\"",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renteree/rentlook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renteree/rentlook/issues"
+  },
+  "homepage": "https://github.com/renteree/rentlook#readme",
+  "dependencies": {
+    "@material-ui/core": "^4.9.14",
+    "axios": "^0.19.2",
+    "classnames": "^2.2.6",
+    "font-awesome": "^4.7.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "sass": "^1.26.5",
+    "stylelint": "^13.3.3",
+    "stylelint-config-sass-guidelines": "^7.0.0"
+  }
+}
