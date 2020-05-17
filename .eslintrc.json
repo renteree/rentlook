@@ -3,14 +3,12 @@
     "parser": "@typescript-eslint/parser",
     "env": {
         "node": true,
-        "jest": true,
         "browser": true,
         "es6": true
     },
     "extends": [
         "airbnb-typescript",
         "plugin:testing-library/react",
-        "plugin:jest-dom/recommended",
         "plugin:@typescript-eslint/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     ],
     "globals": {
