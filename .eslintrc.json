@@ -1,11 +1,17 @@
 {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
     "env": {
+        "node": true,
+        "jest": true,
         "browser": true,
         "es6": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "airbnb-typescript",
+        "plugin:testing-library/react",
+        "plugin:jest-dom/recommended",
+        "plugin:@typescript-eslint/recommended" // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     ],
     "globals": {
         "Atomics": "readonly",
@@ -16,11 +22,18 @@
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
-        "react"
+        "react",
+        "@typescript-eslint"
     ],
     "rules": {
+    },
+    "settings": {
+        "react": {
+            "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+        }
     }
 }

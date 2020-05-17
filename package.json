@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "parcel src/index.html --port 3000",
     "lint": "npm run lint:eslint && npm run lint:style",
-    "lint:eslint": "eslint ./src --fix --ext js,jsx ./src",
-    "lint:style": "npx stylelint \"**/*.scss\"",
+    "lint:eslint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
+    "lint:style": "npx stylelint \"./src/**/*.{js,jsx,ts,tsx,scss}\"",
     "test": "echo \"No test specified\"",
     "build": "parcel build index.html"
   },
@@ -29,17 +30,37 @@
     "font-awesome": "^4.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.7.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/jest": "^25.2.2",
+    "@types/node": "^14.0.1",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-import-resolver-parcel": "^1.10.4",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest-dom": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-testing-library": "^3.1.3",
+    "jest": "^26.0.1",
     "sass": "^1.26.5",
     "stylelint": "^13.3.3",
-    "stylelint-config-sass-guidelines": "^7.0.0"
+    "stylelint-config-sass-guidelines": "^7.0.0",
+    "ts-jest": "^26.0.0",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.2"
   }
 }
