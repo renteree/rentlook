@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Catalog from './components/Catalog/CatalogPage';
 
-const App = () => (
-  <Router className="app-inner">
+const App: React.FunctionComponent = () => (
+  <Router>
     <Switch>
       <Route path="/" component={Catalog} />
     </Switch>
