@@ -28,6 +28,12 @@
         "@typescript-eslint"
     ],
     "rules": {
+      "import/extensions": "off",
+      "arrow-parens": [
+        "error",
+        "as-needed"
+      ],
+      "@typescript-eslint/no-explicit-any": "off"
     },
     "settings": {
         "react": {

@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Catalog from './components/Catalog/CatalogPage';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
-const App: React.FunctionComponent = () => (
-  <Router>
-    <Switch>
-      <Route path="/" component={Catalog} />
-    </Switch>
-  </Router>
+import App from './app/app';
+import history from './app/history';
+import store from './app/store';
+
+const Root: React.FunctionComponent = () => (
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>
 );
 
-ReactDOM.render(<App />, document.getElementById('app-container'));
+ReactDOM.render(<Root />, document.getElementById('app-container'));
