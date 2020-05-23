@@ -8,12 +8,13 @@ import App from './app/app';
 import history from './app/history';
 import store from './app/store';
 import { getLanguage } from '~/redux/locale/selectors';
+import translations from '~/redux/locale/translations';
 
 const LocalizedApp: React.FunctionComponent = () => {
   const usersLocale = useSelector(getLanguage);
 
   return (
-    <IntlProvider locale={usersLocale}>
+    <IntlProvider locale={usersLocale} messages={translations[usersLocale]}>
       <App />
     </IntlProvider>
   );

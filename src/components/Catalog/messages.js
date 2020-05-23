@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   title: {
-    id: 'Catalog',
+    id: 'Catalog.CatalogPage.catalog',
     defaultMessage: 'Catalog',
     description: 'Page title',
   },
