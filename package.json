@@ -10,7 +10,7 @@
     "lint:fix": "eslint ./src --ext .js,.jsx,.ts,.tsx --fix",
     "lint:style": "npx stylelint \"./src/**/*.{js,jsx,ts,tsx,scss}\"",
     "test": "echo \"No test specified\"",
-    "build": "parcel build index.html"
+    "build": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
+    "cssnano": "^4.1.10",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
