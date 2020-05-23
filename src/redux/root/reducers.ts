@@ -2,6 +2,7 @@ import { connectRouter, RouterState } from 'connected-react-router';
 import { combineReducers, Reducer } from 'redux';
 import { History } from 'history';
 import { rentersReducer, RentersState } from '../renters/reducers';
+import { localeReducer, LocaleState } from '~/redux/locale/reducers';
 
 /*
  * The structure of the store
@@ -9,6 +10,7 @@ import { rentersReducer, RentersState } from '../renters/reducers';
 
 export interface RootStateType {
   router: RouterState;
+  locale: LocaleState;
   renters: RentersState;
 }
 
@@ -18,5 +20,6 @@ export interface RootStateType {
 
 export const rootReducer = (history: History): Reducer => combineReducers({
   router: connectRouter(history),
+  locale: localeReducer,
   renters: rentersReducer,
 });

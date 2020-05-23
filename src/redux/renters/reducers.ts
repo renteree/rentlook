@@ -1,11 +1,6 @@
 import { ActionType, createReducer } from 'typesafe-actions';
 import * as Actions from './actions';
-
-/*
- * Used for typing each action
- */
-
-type ActionTypes = ActionType<typeof Actions>;
+import { ActionTypes } from '~/redux/renters/types';
 
 /*
  * The type and the list of props in store.renters
