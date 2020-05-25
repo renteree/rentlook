@@ -11,7 +11,7 @@
     "lint:style": "npx stylelint \"./src/**/*.{js,jsx,ts,tsx,scss}\"",
     "test": "echo \"No test specified\"",
     "build": "parcel build src/index.html",
-    "extract-intl": "NODE_ENV=development extract-messages -l=en -o src/translations -d en --flat 'src/**/!(*.test).js'"
+    "extract-intl": "NODE_ENV=development extract-messages -l=en -o src/translations -d en --flat 'src/**/messages.ts'"
   },
   "repository": {
     "type": "git",
