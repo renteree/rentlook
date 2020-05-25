@@ -22,7 +22,7 @@ jobs:
                 command: npm test
             - run:
                 name: Run Build
-                command: npm i parcer && npm run build
+                command: npm i parcel && npm run build
 
 workflows:
   build:
