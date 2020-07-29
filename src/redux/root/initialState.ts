@@ -15,6 +15,9 @@ const initialState: RootStateType = {
     },
     action: 'POP',
   },
+  locale: {
+    language: 'en',
+  },
   renters: initialRentersState,
 };
 

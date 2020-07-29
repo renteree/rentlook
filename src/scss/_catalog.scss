@@ -1,0 +1,9 @@
+.catalog-page {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+
+  * {
+    margin-bottom: 10px;
+  }
+}

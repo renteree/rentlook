@@ -33,7 +33,16 @@
         "error",
         "as-needed"
       ],
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "react/jsx-props-no-spreading": [
+        "error",
+        {
+          "exceptions": [
+            "FormattedMessage"
+          ]
+        }
+      ],
+      "react/jsx-one-expression-per-line": "off"
     },
     "settings": {
         "react": {
