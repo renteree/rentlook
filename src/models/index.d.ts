@@ -3,12 +3,13 @@ declare namespace Models {
     id?: number;
     name: string;
     phone: string;
-    social: string;
+    social?: string;
     title: string;
     country: string;
     city: string;
-    description: string | null;
-    tenantsDescription: string | null;
+    cityId: string;
+    description?: string;
+    tenantsDescription?: string;
     minBudget: number;
     maxBudget: number;
     willPayFee: boolean;

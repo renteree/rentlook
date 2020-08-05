@@ -16,11 +16,6 @@ export default defineMessages({
     defaultMessage: 'Social link',
     description: 'User social link',
   },
-  country: {
-    id: 'NewRenter.CreateRenter.country',
-    defaultMessage: 'Country',
-    description: 'Country name',
-  },
   city: {
     id: 'NewRenter.CreateRenter.city',
     defaultMessage: 'City',
@@ -90,5 +85,15 @@ export default defineMessages({
     id: 'NewRenter.CreateRenter.cancel',
     defaultMessage: 'Cancel',
     description: 'Cancel',
+  },
+  notValidNumber: {
+    id: 'NewRenter.CreateRenter.notValidNumber',
+    defaultMessage: 'Not a valid number',
+    description: 'Not a valid number',
+  },
+  error: {
+    id: 'NewRenter.CreateRenter.error',
+    defaultMessage: 'Error! Your ad not added',
+    description: 'Error! Your ad not added',
   },
 });

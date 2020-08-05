@@ -6,7 +6,6 @@ import reportError from '../common/reportError';
 import Renter = Models.Renter;
 import Catalog = Models.Catalog;
 
-
 const instance = axios.create({
   baseURL: config.api.url,
   timeout: 15000,
