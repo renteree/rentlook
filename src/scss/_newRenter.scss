@@ -1,0 +1,20 @@
+@import 'variables';
+
+#new-renter-page {
+  .form-control {
+    margin-left: $sp-m;
+    max-width: 100px;
+  }
+
+  .phone-input {
+    margin: 0 $sp-m;
+  }
+
+  .budget-to-input {
+    margin-left: $sp-m;
+  }
+
+  .submit-button {
+    margin-left: $sp-m;
+  }
+}
