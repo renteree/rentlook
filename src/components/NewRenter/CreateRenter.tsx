@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Container,
@@ -24,6 +24,7 @@ import messages from './messages';
 // Internal
 import { postTenants } from '~/api/coreApi';
 import GoogleAutocomplete from './GoogleAutocomplete';
+import { currency } from '~/common/enums';
 
 import Renter = Models.Renter;
 import PlaceType = Models.PlaceType;
@@ -32,19 +33,15 @@ const defaultValidationForm = {
   phone: '',
 };
 
-const CURRENCY = {
-  USD: 'USD',
-  EUR: 'EUR',
-  UAH: 'UAH',
-  RUB: 'RUB',
-};
-
 const CreateRenter: React.FunctionComponent = () => {
   const intl = useIntl();
-  const [validationForm, setValidationForm] = useState(defaultValidationForm);
+  const [
+    validationForm,
+    setValidationForm,
+  ] = React.useState<{phone: string}>(defaultValidationForm);
   const [locationValue, setLocationValue] = React.useState<PlaceType | null>(null);
-  const [isSendingForm, setIsSendingForm] = React.useState(false);
-  const [openAlert, setOpenAlert] = React.useState(false);
+  const [isSendingForm, setIsSendingForm] = React.useState<boolean>(false);
+  const [openAlert, setOpenAlert] = React.useState<boolean>(false);
 
   const history = useHistory();
 
@@ -162,7 +159,7 @@ const CreateRenter: React.FunctionComponent = () => {
               labelId="select-currency-label"
               defaultValue="USD"
             >
-              {(Object.values(CURRENCY)).map(item => <MenuItem value={item}>{item}</MenuItem>)}
+              {(Object.values(currency)).map(item => <MenuItem value={item}>{item}</MenuItem>)}
             </Select>
           </FormControl>
         </Box>

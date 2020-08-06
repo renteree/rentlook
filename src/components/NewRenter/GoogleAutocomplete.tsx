@@ -37,7 +37,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteTypes> = ({
   className,
 }) => {
   const [locationValue, setLocationValue] = React.useState<PlaceType | null>(null);
-  const [inputLocationValue, setInputLocationValue] = React.useState('');
+  const [inputLocationValue, setInputLocationValue] = React.useState<string>('');
   const [locationOptions, setLocationOptions] = React.useState<PlaceType[]>([]);
   const loaded = React.useRef(false);
   const usersLocale = useSelector(getLanguage);
