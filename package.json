@@ -34,6 +34,7 @@
     "@material-ui/styles": "^4.10.0",
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/phone": "^2.4.0",
+    "@types/uuid": "^8.0.1",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
@@ -52,7 +53,8 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "reselect": "^4.0.0",
-    "typesafe-actions": "^5.1.0"
+    "typesafe-actions": "^5.1.0",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@testing-library/react": "^10.0.4",

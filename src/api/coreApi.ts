@@ -7,7 +7,7 @@ import Renter = Models.Renter;
 import Catalog = Models.Catalog;
 
 const instance = axios.create({
-  baseURL: config.api.url,
+  baseURL: config.coreApiUrl,
   timeout: 15000,
   headers: {
     'content-type': 'application/json',
