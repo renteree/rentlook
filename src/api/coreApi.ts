@@ -24,6 +24,14 @@ export const getTenants = async (params: Catalog): Promise<AxiosResponse | void>
   }
 };
 
+export const getTenant = async (id: string): Promise<AxiosResponse | void> => {
+  try {
+    return instance.get(`/tenant/${id}`);
+  } catch (e) {
+    return reportError(e);
+  }
+};
+
 export const postTenants = async (body: Renter): Promise<AxiosResponse | void> => {
   try {
     return instance.post('/tenants', body);

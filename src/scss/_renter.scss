@@ -1,0 +1,17 @@
+@import 'variables';
+
+#renter-page {
+  .main-card {
+    max-width: 150px;
+  }
+
+  .row-grid {
+    padding: 10px 0;
+  }
+
+  .icon-fee {
+     cursor: pointer;
+     margin-left: 10px;
+     vertical-align: middle;
+   }
+}
