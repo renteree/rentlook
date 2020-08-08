@@ -1,6 +1,21 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  catalog: {
+    id: 'Catalog.pageTitle',
+    defaultMessage: 'Catalog',
+    description: 'Title for the page header',
+  },
+  notFound: {
+    id: 'NotFound.pageTitle',
+    defaultMessage: 'Not Found',
+    description: 'Title for the page header',
+  },
+  newRenter: {
+    id: 'NewRenter.pageTitle',
+    defaultMessage: 'Create a new ad',
+    description: 'Title for the page header',
+  },
   userName: {
     id: 'NewRenter.CreateRenter.name',
     defaultMessage: 'Name',
@@ -95,5 +110,20 @@ export default defineMessages({
     id: 'NewRenter.CreateRenter.error',
     defaultMessage: 'Error! Your ad not added',
     description: 'Error! Your ad not added',
+  },
+  projectDescription: {
+    id: 'Common.projectDescription',
+    defaultMessage: 'Renteree is a place where you can post about the search for an apartment or house. Landlords or realtors can find anyone interested in their real estate',
+    description: 'Small text in the main page about the project',
+  },
+  projectFirstStep: {
+    id: 'Common.projectDescription.first',
+    defaultMessage: '1. Post your search preferences about an apartment or house',
+    description: 'Small text in the sidebar page how to use',
+  },
+  projectSecondStep: {
+    id: 'Common.projectDescription.second',
+    defaultMessage: '2. Respond to real estate offers from landlords or realtors by phone or social media',
+    description: 'Small text in the sidebar page how to use',
   },
 });

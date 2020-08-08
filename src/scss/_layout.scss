@@ -1,0 +1,39 @@
+@import 'variables';
+
+.root {
+  display: flex;
+
+  .app-bar {
+    @media (min-width: $sm) {
+      margin-left: $drawer-width;
+      width: calc(100% - #{$drawer-width});
+    }
+  }
+
+  .menu-button {
+    margin-right: $sp-m;
+    @media (min-width: $sm) {
+      display: none;
+    }
+  }
+}
+
+.drawer {
+  @media (min-width: $sm) {
+    flex-shrink: 0;
+    width: $drawer-width;
+  }
+}
+
+.toolbar {
+  min-height: 64px;
+}
+
+.drawer-paper {
+  width: $drawer-width;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 0 20px 20px;
+}
