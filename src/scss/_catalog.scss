@@ -1,9 +1,27 @@
 .catalog-page {
   display: flex;
-  flex-direction: column;
-  width: fit-content;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: $sp-m 0;
 
-  * {
-    margin-bottom: 10px;
+  .item-container {
+    display: flex;
+    width: 100%;
+    min-width: 300px;
+    padding: $sp-l;
+    flex: 1;
+    margin: $sp-m;
+
+    @media (min-width: $lg) {
+      min-width: 400px;
+    }
+
+    .photo-preview {
+      font-size: 70px;
+    }
+
+    .item-content {
+      margin-left: $sp-l;
+    }
   }
 }

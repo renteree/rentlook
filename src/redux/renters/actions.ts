@@ -7,6 +7,6 @@ const ADD_RENTER = 'ADD_RENTER';
  * A type of a payload is specified during an action creation
  */
 
-export const addRenterAction = createAction(ADD_RENTER)<Models.Renter>();
+export const addRenterAction = createAction(ADD_RENTER)<Models.Renter[]>();
 
 export default { addRenterAction };

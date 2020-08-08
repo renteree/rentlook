@@ -6,4 +6,16 @@ export default defineMessages({
     defaultMessage: 'Catalog',
     description: 'Page title',
   },
+  name: {
+    id: 'Catalog.Catalog.name',
+    defaultMessage: 'Name',
+  },
+  city: {
+    id: 'Catalog.Catalog.city',
+    defaultMessage: 'City',
+  },
+  budget: {
+    id: 'Catalog.Catalog.budget',
+    defaultMessage: 'Budget',
+  },
 });

@@ -21,9 +21,9 @@ export const initialState: RentersState = {
 // Ads a renter advertisement to list in the store
 export const addRenter = (
   state: RentersState,
-  { payload: renter }: ActionType<typeof Actions.addRenterAction>,
+  { payload: renters }: ActionType<typeof Actions.addRenterAction>,
 ): RentersState => {
-  const adsList = [...state.adsList, renter];
+  const adsList = [...state.adsList, ...renters];
 
   return {
     adsList,
