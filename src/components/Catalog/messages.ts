@@ -1,21 +1,16 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  title: {
-    id: 'Catalog.Catalog.catalog',
-    defaultMessage: 'Catalog',
-    description: 'Page title',
+  house: {
+    id: 'Catalog.Catalog.house',
+    defaultMessage: 'House',
   },
-  name: {
-    id: 'Catalog.Catalog.name',
-    defaultMessage: 'Name',
+  flat: {
+    id: 'Catalog.Catalog.flat',
+    defaultMessage: 'Apartment',
   },
-  city: {
-    id: 'Catalog.Catalog.city',
-    defaultMessage: 'City',
-  },
-  budget: {
-    id: 'Catalog.Catalog.budget',
-    defaultMessage: 'Budget',
+  room: {
+    id: 'Catalog.Catalog.room',
+    defaultMessage: 'Room',
   },
 });

@@ -1,30 +1,50 @@
 // Core
-import React, { useEffect, useRef, useState } from 'react';
-
-// Redux
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import useAction from '~/hooks/useAction';
-import { getAdsList } from '~/redux/renters/selectors';
-import { addRenterAction } from '~/redux/renters/actions';
-import { getTenants } from '~/api/coreApi';
+
+// Components
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ListingItem from '~/components/Catalog/ListingItem';
 
+// Redux
+import useAction from '~/hooks/useAction';
+import { getAdsList, getHitsPerPage, getLoading } from '~/redux/renters/selectors';
+import { addRenterAction, getNextPage, setLoadingAction } from '~/redux/renters/actions';
+
+// Api
+import { getTenants } from '~/api/coreApi';
+import { useInfiniteScroll } from '~/hooks/useInfiniteScroll';
+
 const Catalog: React.FunctionComponent = () => {
+  // const [loading, setLoading] = useState<boolean>(false);
+  const getNextPageAction = useAction(getNextPage);
+  const setLoading = useAction(setLoadingAction);
   // useSelector get adsList from the store and re-renders the component if adsList has changed
   const adsList: Models.Renter[] = useSelector(getAdsList);
+  const itemsPerPage: number = useSelector(getHitsPerPage);
+  const loading: boolean = useSelector(getLoading);
   // addRenter action invokes addRenter reducer with passed new renter in payload
   const addRenter = useAction(addRenterAction);
 
+  const loadMore = useCallback(() => getNextPageAction(), [getNextPageAction]);
+  useInfiniteScroll({ onLoadMore: loadMore, selectorId: 'catalog-page' });
+
+
   const downloadCatalog = async (): Promise<void> => {
-    const response = await getTenants({});
+    setLoading(true);
+
+    const response = await getTenants({ offset: 0, limit: itemsPerPage });
 
     if (!response) return;
     if (response.status !== 200) return;
 
     const list: Models.Renter[] = response?.data?.tenants;
     addRenter(list);
-  };
 
+    setLoading(false);
+  };
+  //
   useEffect(() => {
     downloadCatalog();
   }, []);
@@ -42,16 +62,26 @@ const Catalog: React.FunctionComponent = () => {
 
     const numberInRow = Math.floor(catalogWidth / itemWidth);
     const hasItemsInLastRow = numberInRow && Math.floor(adsList.length % numberInRow);
-    setPlugsNumber(numberInRow === 1 ? 0 : numberInRow - hasItemsInLastRow);
+    setPlugsNumber(hasItemsInLastRow === 0 ? 0 : numberInRow - hasItemsInLastRow);
   });
 
   return (
-    <div className="catalog-page" ref={catalogRef}>
-      {adsList.map((ad, index) => (
-        <ListingItem item={ad} key={ad.id} ref={index === 0 ? firstItemRef : undefined} />
-      ))}
-      {plugsNumber && [...new Array(plugsNumber)].map((number, i) => plug(i))}
-    </div>
+    <Box display="flex" flexDirection="column" height="calc(100% - 100px)">
+     {!!adsList.length
+       && <div id="catalog-page" ref={catalogRef}>
+          {adsList.map((ad, index) => (
+            <ListingItem item={ad} key={ad.id} ref={index === 0 ? firstItemRef : undefined} />
+          ))}
+          {!!plugsNumber && [...Array(plugsNumber)].map((number, i) => plug(i))}
+        </div>
+     }
+      {loading
+      && (
+        <Box display="flex" justifyContent="center" alignItems="center" flex={adsList.length ? 0 : 1}>
+          <CircularProgress />
+        </Box>
+      )}
+    </Box>
   );
 };
 

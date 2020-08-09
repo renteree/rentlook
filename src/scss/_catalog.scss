@@ -1,8 +1,11 @@
-.catalog-page {
+#catalog-page {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   padding: $sp-m 0;
+  height: calc(100% - 100px);
+  overflow: scroll;
+  flex: 1;
 
   .item-container {
     display: flex;
@@ -16,8 +19,13 @@
       min-width: 400px;
     }
 
-    .photo-preview {
+    .photo-unknown {
       font-size: 70px;
+    }
+
+    .photo-preview {
+      width: 70px;
+      height: 70px;
     }
 
     .item-content {

@@ -8,10 +8,18 @@ import { ActionTypes } from '~/redux/renters/types';
 
 export interface RentersState {
   adsList: Models.Renter[];
+  itemsInRow: number;
+  itemsQtyInDb: number;
+  hitsPerPage: number;
+  loading: boolean;
 }
 
 export const initialState: RentersState = {
   adsList: [],
+  itemsInRow: 0,
+  itemsQtyInDb: 0,
+  hitsPerPage: 8,
+  loading: false,
 };
 
 /*
@@ -26,13 +34,41 @@ export const addRenter = (
   const adsList = [...state.adsList, ...renters];
 
   return {
+    ...state,
     adsList,
   };
 };
+
+export const setItemsInRow = (
+  state: RentersState,
+  { payload: itemsInRow }: ActionType<typeof Actions.setItemsInRowAction>,
+): RentersState => ({
+  ...state,
+  itemsInRow,
+});
+
+export const setItemsQtyInDb = (
+  state: RentersState,
+  { payload: itemsQtyInDb }: ActionType<typeof Actions.setItemsInDbAction>,
+): RentersState => ({
+  ...state,
+  itemsQtyInDb,
+});
+
+export const setLoading = (
+  state: RentersState,
+  { payload: loading }: ActionType<typeof Actions.setLoadingAction>,
+): RentersState => ({
+  ...state,
+  loading,
+});
 
 /*
  * Combined reducer for RentersState with pairs of corresponding action and reducers
  */
 
 export const rentersReducer = createReducer<RentersState, ActionTypes>(initialState)
-  .handleAction(Actions.addRenterAction, addRenter);
+  .handleAction(Actions.addRenterAction, addRenter)
+  .handleAction(Actions.setItemsInRowAction, setItemsInRow)
+  .handleAction(Actions.setItemsInDbAction, setItemsQtyInDb)
+  .handleAction(Actions.setLoadingAction, setLoading);

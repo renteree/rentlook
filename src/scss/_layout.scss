@@ -2,6 +2,7 @@
 
 .root {
   display: flex;
+  min-height: 100vh;
 
   .app-bar {
     @media (min-width: $sm) {
@@ -38,4 +39,5 @@
 .content {
   flex-grow: 1;
   padding: 0 $sp-l $sp-l;
+  min-height: 100%;
 }

@@ -16,3 +16,23 @@ export const getAdsList: SelectorType = createSelector(
   getStoreState,
   ({ adsList }: RentersState) => adsList,
 );
+
+export const getItemsInRow = createSelector(
+  getStoreState,
+  ({ itemsInRow }: RentersState) => itemsInRow,
+);
+
+export const getItemsQtyInDb = createSelector(
+  getStoreState,
+  ({ itemsQtyInDb }: RentersState) => itemsQtyInDb,
+);
+
+export const getHitsPerPage = createSelector(
+  getStoreState,
+  ({ hitsPerPage }: RentersState) => hitsPerPage,
+);
+
+export const getLoading = createSelector(
+  getStoreState,
+  ({ loading }: RentersState) => loading,
+);
