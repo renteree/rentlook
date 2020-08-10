@@ -18,9 +18,7 @@ const ListingItem = React.forwardRef<HTMLElement, Props>(({ item }, ref) => (
     {item.image && <Avatar src={item.image?.url} className="photo-preview" alt={item.user.name} />}
     <Box display="flex" justifyContent="space-between" flexDirection="row" width="100%">
       <Box display="flex" flexDirection="column" justifyContent="center" ml={2}>
-        <Typography variant="subtitle2">
-          {item.user.name}
-        </Typography>
+        <Typography variant="subtitle2">{item.user.name}</Typography>
         <Typography variant="body2" color="textSecondary">
           <FormattedMessage {...messages[item.housingType]} />
         </Typography>

@@ -6,7 +6,7 @@ type Types = {
   selectorId?: string;
 };
 
-export const useInfiniteScroll = ({ onLoadMore, disabled = false, selectorId = 'main-container' }: Types) => {
+export const useInfiniteScroll = ({ onLoadMore, disabled = false, selectorId = 'content' }: Types) => {
   useEffect(() => {
     const element = document.getElementById(selectorId) || document.documentElement;
     const handleScroll = () => {

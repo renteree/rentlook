@@ -10,45 +10,39 @@ import ListingItem from '~/components/Catalog/ListingItem';
 // Redux
 import useAction from '~/hooks/useAction';
 import { getAdsList, getHitsPerPage, getLoading } from '~/redux/renters/selectors';
-import { addRenterAction, getNextPage, setLoadingAction } from '~/redux/renters/actions';
+import {
+  getNextPageAction,
+  setHitsPerPageAction,
+  setItemsInRowAction,
+  setLoadingAction,
+} from '~/redux/renters/actions';
 
 // Api
-import { getTenants } from '~/api/coreApi';
 import { useInfiniteScroll } from '~/hooks/useInfiniteScroll';
 
 const Catalog: React.FunctionComponent = () => {
-  // const [loading, setLoading] = useState<boolean>(false);
-  const getNextPageAction = useAction(getNextPage);
+  const getNextPage = useAction(getNextPageAction);
+  const setHitsPerPage = useAction(setHitsPerPageAction);
+  const setItemsInRow = useAction(setItemsInRowAction);
   const setLoading = useAction(setLoadingAction);
+
   // useSelector get adsList from the store and re-renders the component if adsList has changed
   const adsList: Models.Renter[] = useSelector(getAdsList);
   const itemsPerPage: number = useSelector(getHitsPerPage);
   const loading: boolean = useSelector(getLoading);
-  // addRenter action invokes addRenter reducer with passed new renter in payload
-  const addRenter = useAction(addRenterAction);
 
-  const loadMore = useCallback(() => getNextPageAction(), [getNextPageAction]);
-  useInfiniteScroll({ onLoadMore: loadMore, selectorId: 'catalog-page' });
-
-
-  const downloadCatalog = async (): Promise<void> => {
+  const loadMore = useCallback(() => {
+    if (loading) return;
     setLoading(true);
+    getNextPage();
+  }, [getNextPage]);
 
-    const response = await getTenants({ offset: 0, limit: itemsPerPage });
+  // First download
+  useEffect(loadMore, []);
+  // Subsequent downloads
+  useInfiniteScroll({ onLoadMore: loadMore });
 
-    if (!response) return;
-    if (response.status !== 200) return;
-
-    const list: Models.Renter[] = response?.data?.tenants;
-    addRenter(list);
-
-    setLoading(false);
-  };
-  //
-  useEffect(() => {
-    downloadCatalog();
-  }, []);
-
+  // Elements are used to count the number of items in a row
   const firstItemRef = useRef<HTMLElement>(null);
   const catalogRef = useRef<HTMLDivElement>(null);
 
@@ -56,28 +50,41 @@ const Catalog: React.FunctionComponent = () => {
 
   const [plugsNumber, setPlugsNumber] = useState(0);
 
+  // Update alignment of items avoiding stretching the last item
   useEffect(() => {
     const catalogWidth: number = catalogRef.current?.clientWidth || 0;
     const itemWidth = firstItemRef.current?.clientWidth || 1;
 
     const numberInRow = Math.floor(catalogWidth / itemWidth);
     const hasItemsInLastRow = numberInRow && Math.floor(adsList.length % numberInRow);
-    setPlugsNumber(hasItemsInLastRow === 0 ? 0 : numberInRow - hasItemsInLastRow);
+    const plugs = hasItemsInLastRow === 0 ? 0 : numberInRow - hasItemsInLastRow;
+    setPlugsNumber(plugs);
   });
 
+  // Update the state to load right number of items
+  useEffect(() => {
+    const catalogWidth: number = catalogRef.current?.clientWidth || 0;
+    const itemWidth = firstItemRef.current?.clientWidth || 1;
+    const numberInRow = Math.floor(catalogWidth / itemWidth);
+
+    setItemsInRow(numberInRow);
+    if (plugsNumber) {
+      setHitsPerPage(itemsPerPage + plugsNumber);
+    }
+  }, [plugsNumber]);
+
   return (
-    <Box display="flex" flexDirection="column" height="calc(100% - 100px)">
-     {!!adsList.length
-       && <div id="catalog-page" ref={catalogRef}>
+    <Box display="flex" flexDirection="column" alignItems="center" height="100%">
+      {!!adsList.length && (
+        <div id="catalog-page" ref={catalogRef}>
           {adsList.map((ad, index) => (
             <ListingItem item={ad} key={ad.id} ref={index === 0 ? firstItemRef : undefined} />
           ))}
           {!!plugsNumber && [...Array(plugsNumber)].map((number, i) => plug(i))}
         </div>
-     }
-      {loading
-      && (
-        <Box display="flex" justifyContent="center" alignItems="center" flex={adsList.length ? 0 : 1}>
+      )}
+      {loading && (
+        <Box display="flex" justifyContent="center" alignItems="center" flex={adsList.length ? 0 : 1} p={4}>
           <CircularProgress />
         </Box>
       )}

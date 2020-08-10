@@ -9,30 +9,14 @@ import { RentersState } from './reducers';
 // Basic selector to get the state, which is used to create more detailed selectors
 export const getStoreState: (store: RootStateType) => RentersState = ({ renters }) => renters;
 
-type SelectorType = OutputSelector<RootStateType, Models.Renter[],
-(res: RentersState) => Models.Renter[]>;
+type SelectorType = OutputSelector<RootStateType, Models.Renter[], (res: RentersState) => Models.Renter[]>;
 
-export const getAdsList: SelectorType = createSelector(
-  getStoreState,
-  ({ adsList }: RentersState) => adsList,
-);
+export const getAdsList: SelectorType = createSelector(getStoreState, ({ adsList }: RentersState) => adsList);
 
-export const getItemsInRow = createSelector(
-  getStoreState,
-  ({ itemsInRow }: RentersState) => itemsInRow,
-);
+export const getItemsInRow = createSelector(getStoreState, ({ itemsInRow }: RentersState) => itemsInRow);
 
-export const getItemsQtyInDb = createSelector(
-  getStoreState,
-  ({ itemsQtyInDb }: RentersState) => itemsQtyInDb,
-);
+export const getItemsQtyInDb = createSelector(getStoreState, ({ itemsQtyInDb }: RentersState) => itemsQtyInDb);
 
-export const getHitsPerPage = createSelector(
-  getStoreState,
-  ({ hitsPerPage }: RentersState) => hitsPerPage,
-);
+export const getHitsPerPage = createSelector(getStoreState, ({ hitsPerPage }: RentersState) => hitsPerPage);
 
-export const getLoading = createSelector(
-  getStoreState,
-  ({ loading }: RentersState) => loading,
-);
+export const getLoading = createSelector(getStoreState, ({ loading }: RentersState) => loading);

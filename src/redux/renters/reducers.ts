@@ -18,7 +18,7 @@ export const initialState: RentersState = {
   adsList: [],
   itemsInRow: 0,
   itemsQtyInDb: 0,
-  hitsPerPage: 8,
+  hitsPerPage: 20,
   loading: false,
 };
 
@@ -63,6 +63,14 @@ export const setLoading = (
   loading,
 });
 
+export const setHitsPerPage = (
+  state: RentersState,
+  { payload: hitsPerPage }: ActionType<typeof Actions.setHitsPerPageAction>,
+): RentersState => ({
+  ...state,
+  hitsPerPage,
+});
+
 /*
  * Combined reducer for RentersState with pairs of corresponding action and reducers
  */
@@ -71,4 +79,5 @@ export const rentersReducer = createReducer<RentersState, ActionTypes>(initialSt
   .handleAction(Actions.addRenterAction, addRenter)
   .handleAction(Actions.setItemsInRowAction, setItemsInRow)
   .handleAction(Actions.setItemsInDbAction, setItemsQtyInDb)
+  .handleAction(Actions.setHitsPerPageAction, setHitsPerPage)
   .handleAction(Actions.setLoadingAction, setLoading);

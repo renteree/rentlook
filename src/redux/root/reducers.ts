@@ -18,8 +18,9 @@ export interface RootStateType {
  * The main combined reducer
  */
 
-export const rootReducer = (history: History): Reducer => combineReducers({
-  router: connectRouter(history),
-  locale: localeReducer,
-  renters: rentersReducer,
-});
+export const rootReducer = (history: History): Reducer =>
+  combineReducers({
+    router: connectRouter(history),
+    locale: localeReducer,
+    renters: rentersReducer,
+  });

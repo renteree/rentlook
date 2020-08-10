@@ -3,9 +3,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   padding: $sp-m 0;
-  height: calc(100% - 100px);
-  overflow: scroll;
-  flex: 1;
+  max-width: 1600px;
+  //max-height: calc(100vh - 100px);
+  //overflow: scroll;
+  //flex: 1;
 
   .item-container {
     display: flex;
