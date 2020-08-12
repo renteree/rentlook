@@ -1,25 +1,49 @@
+type Housing = 'house' | 'flat' | 'room';
+
 declare namespace Models {
-  export interface Renter {
-    id?: number;
+  export interface Image {
+    url: string;
+    width: string;
+    height: string;
+    type: string;
+  }
+
+  export interface User {
+    id: number;
     name: string;
     phone: string;
     social?: string;
-    title: string;
+    createdAt?: Date;
+  }
+
+  export interface Location {
+    id: number;
     country: string;
     city: string;
     cityId: string;
+  }
+
+  export interface Renter {
+    id?: number;
+    user: User;
+    location: Location;
+    title: string;
     description?: string;
     tenantsDescription?: string;
     minBudget: number;
     maxBudget: number;
     willPayFee: boolean;
-    housingType: string;
+    housingType: Housing;
     currency: string;
+    image: Image | null;
+    createdAt?: Date;
   }
+
   export interface Catalog {
     offset?: number;
     limit?: number;
   }
+
   export interface PlaceType {
     description: string;
     place_id: string;

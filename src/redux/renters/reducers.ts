@@ -8,10 +8,18 @@ import { ActionTypes } from '~/redux/renters/types';
 
 export interface RentersState {
   adsList: Models.Renter[];
+  itemsInRow: number;
+  itemsQtyInDb: number;
+  hitsPerPage: number;
+  loading: boolean;
 }
 
 export const initialState: RentersState = {
   adsList: [],
+  itemsInRow: 0,
+  itemsQtyInDb: 0,
+  hitsPerPage: 20,
+  loading: false,
 };
 
 /*
@@ -21,18 +29,55 @@ export const initialState: RentersState = {
 // Ads a renter advertisement to list in the store
 export const addRenter = (
   state: RentersState,
-  { payload: renter }: ActionType<typeof Actions.addRenterAction>,
+  { payload: renters }: ActionType<typeof Actions.addRenterAction>,
 ): RentersState => {
-  const adsList = [...state.adsList, renter];
+  const adsList = [...state.adsList, ...renters];
 
   return {
+    ...state,
     adsList,
   };
 };
+
+export const setItemsInRow = (
+  state: RentersState,
+  { payload: itemsInRow }: ActionType<typeof Actions.setItemsInRowAction>,
+): RentersState => ({
+  ...state,
+  itemsInRow,
+});
+
+export const setItemsQtyInDb = (
+  state: RentersState,
+  { payload: itemsQtyInDb }: ActionType<typeof Actions.setItemsInDbAction>,
+): RentersState => ({
+  ...state,
+  itemsQtyInDb,
+});
+
+export const setLoading = (
+  state: RentersState,
+  { payload: loading }: ActionType<typeof Actions.setLoadingAction>,
+): RentersState => ({
+  ...state,
+  loading,
+});
+
+export const setHitsPerPage = (
+  state: RentersState,
+  { payload: hitsPerPage }: ActionType<typeof Actions.setHitsPerPageAction>,
+): RentersState => ({
+  ...state,
+  hitsPerPage,
+});
 
 /*
  * Combined reducer for RentersState with pairs of corresponding action and reducers
  */
 
 export const rentersReducer = createReducer<RentersState, ActionTypes>(initialState)
-  .handleAction(Actions.addRenterAction, addRenter);
+  .handleAction(Actions.addRenterAction, addRenter)
+  .handleAction(Actions.setItemsInRowAction, setItemsInRow)
+  .handleAction(Actions.setItemsInDbAction, setItemsQtyInDb)
+  .handleAction(Actions.setHitsPerPageAction, setHitsPerPage)
+  .handleAction(Actions.setLoadingAction, setLoading);

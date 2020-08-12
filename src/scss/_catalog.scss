@@ -1,9 +1,37 @@
-.catalog-page {
+#catalog-page {
   display: flex;
-  flex-direction: column;
-  width: fit-content;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 1600px;
+  padding: $sp-m 0;
 
-  * {
-    margin-bottom: 10px;
+  .item-container {
+    flex: 1;
+    margin: $sp-m;
+    width: 100%;
+  }
+}
+
+#catalog-page .card {
+  display: flex;
+  min-width: 300px;
+  padding: $sp-l;
+  width: 100%;
+
+  @media (min-width: $lg) {
+    min-width: 400px;
+  }
+
+  .photo-unknown {
+    font-size: 70px;
+  }
+
+  .photo-preview {
+    height: 70px;
+    width: 70px;
+  }
+
+  .item-content {
+    margin-left: $sp-l;
   }
 }

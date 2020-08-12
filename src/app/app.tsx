@@ -10,7 +10,7 @@ import Renter from '~/components/Renter/Renter';
 const App: React.FunctionComponent = () => (
   <div className="root">
     <Sidebar />
-    <main className="content">
+    <main id="content">
       <div className="toolbar" />
       <Switch>
         <Route exact path="/" component={Catalog} />

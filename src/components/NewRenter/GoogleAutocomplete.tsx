@@ -10,7 +10,6 @@ import { getLanguage } from '~/redux/locale/selectors';
 
 import PlaceType = Models.PlaceType;
 
-
 function loadScript(src: string, position: HTMLElement | null, id: string): void {
   if (!position) {
     return;
@@ -31,11 +30,7 @@ type GoogleAutocompleteTypes = {
   className?: string;
 };
 
-const GoogleAutocomplete: React.FC<GoogleAutocompleteTypes> = ({
-  renderInput,
-  onChange,
-  className,
-}) => {
+const GoogleAutocomplete: React.FC<GoogleAutocompleteTypes> = ({ renderInput, onChange, className }) => {
   const [locationValue, setLocationValue] = React.useState<PlaceType | null>(null);
   const [inputLocationValue, setInputLocationValue] = React.useState<string>('');
   const [locationOptions, setLocationOptions] = React.useState<PlaceType[]>([]);
@@ -55,12 +50,10 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteTypes> = ({
   }
 
   const fetch = React.useMemo(
-    () => throttle((
-      request: { input: string; types: string[] },
-      callback: (results?: PlaceType[]) => void,
-    ) => {
-      (autocompleteService.current as any).getPlacePredictions(request, callback);
-    }, 200),
+    () =>
+      throttle((request: { input: string; types: string[] }, callback: (results?: PlaceType[]) => void) => {
+        (autocompleteService.current as any).getPlacePredictions(request, callback);
+      }, 200),
     [],
   );
 
@@ -140,8 +133,7 @@ const GoogleAutocomplete: React.FC<GoogleAutocompleteTypes> = ({
                   key={uuidv4()}
                   style={{
                     fontWeight: part.highlight ? 700 : 400,
-                  }}
-                >
+                  }}>
                   {part.text}
                 </span>
               ))}
