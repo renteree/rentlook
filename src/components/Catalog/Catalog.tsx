@@ -51,24 +51,28 @@ const Catalog: React.FunctionComponent = () => {
 
   const [plugsNumber, setPlugsNumber] = useState(0);
 
-  const catalogWidth: number = catalogRef.current?.clientWidth || 0;
-  const itemWidth = firstItemRef.current?.clientWidth || 1;
-  const numberInRow = Math.floor(catalogWidth / itemWidth);
-
   // Update alignment of items avoiding stretching the last item
   useEffect(() => {
+    const catalogWidth: number = catalogRef.current?.clientWidth || 0;
+    const itemWidth = firstItemRef.current?.clientWidth || 1;
+    const numberInRow = Math.floor(catalogWidth / itemWidth);
+
     const hasItemsInLastRow = numberInRow && Math.floor(adsList.length % numberInRow);
     const plugs = hasItemsInLastRow === 0 ? 0 : numberInRow - hasItemsInLastRow;
     setPlugsNumber(plugs);
-  }, [numberInRow, adsList]);
+  }, [catalogRef, firstItemRef, adsList]);
 
   // Update the state to load right number of items
   useEffect(() => {
+    const catalogWidth: number = catalogRef.current?.clientWidth || 0;
+    const itemWidth = firstItemRef.current?.clientWidth || 1;
+    const numberInRow = Math.floor(catalogWidth / itemWidth);
+
     setItemsInRow(numberInRow);
     if (plugsNumber) {
       setHitsPerPage(itemsPerPage + plugsNumber);
     }
-  }, [plugsNumber, numberInRow, itemsPerPage]);
+  }, [catalogRef, firstItemRef, plugsNumber]);
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" height="100%">
