@@ -5,12 +5,15 @@
   max-width: 1600px;
   padding: $sp-m 0;
 
+  .item-container {
+    flex: 1;
+    margin: $sp-m;
+    width: 100%;
+  }
 }
 
-#catalog-page .item-container {
+#catalog-page .card {
   display: flex;
-  flex: 1;
-  margin: $sp-m;
   min-width: 300px;
   padding: $sp-l;
   width: 100%;

@@ -10,7 +10,7 @@ export const useInfiniteScroll = ({ onLoadMore, disabled = false, selectorId = '
   useEffect(() => {
     const element = document.getElementById(selectorId) || document.documentElement;
     const handleScroll = () => {
-      const isPageEnd = element.offsetHeight + element.scrollTop >= element.scrollHeight - 40;
+      const isPageEnd = element.scrollHeight - element.scrollTop === element.clientHeight;
 
       if (isPageEnd && !disabled) {
         onLoadMore();
