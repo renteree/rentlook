@@ -1,4 +1,13 @@
+type Housing = 'house' | 'flat' | 'room';
+
 declare namespace Models {
+  export interface Image {
+    url: string;
+    width: string;
+    height: string;
+    type: string;
+  }
+
   export interface User {
     id: number;
     name: string;
@@ -14,13 +23,6 @@ declare namespace Models {
     cityId: string;
   }
 
-  export interface Image {
-    url: string;
-    width: string;
-    height: string;
-    type: string;
-  }
-
   export interface Renter {
     id?: number;
     user: User;
@@ -31,16 +33,17 @@ declare namespace Models {
     minBudget: number;
     maxBudget: number;
     willPayFee: boolean;
-    housingType: 'room' | 'flat' | 'house';
+    housingType: Housing;
     currency: string;
+    image: Image | null;
     createdAt?: Date;
-    image?: Image | null;
   }
 
   export interface Catalog {
     offset?: number;
     limit?: number;
   }
+
   export interface PlaceType {
     description: string;
     place_id: string;

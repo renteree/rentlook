@@ -184,21 +184,30 @@ const CreateRenter: React.FunctionComponent = () => {
             )}
           />
           <FormControl className="form-control" fullWidth>
-            <InputLabel id="select-housing-type-label"><FormattedMessage {...messages.housingType} /></InputLabel>
-            <Select
-              name="housingType"
-              labelId="select-housing-type-label"
-              id="select-housing-type"
-              defaultValue="flat"
-            >
-              <MenuItem value="flat"><FormattedMessage {...messages.flat} /></MenuItem>
-              <MenuItem value="house"><FormattedMessage {...messages.house} /></MenuItem>
-              <MenuItem value="room"><FormattedMessage {...messages.room} /></MenuItem>
+            <InputLabel id="select-housing-type-label">
+              <FormattedMessage {...messages.housingType} />
+            </InputLabel>
+            <Select name="housingType" labelId="select-housing-type-label" id="select-housing-type" defaultValue="flat">
+              <MenuItem value="flat">
+                <FormattedMessage {...messages.flat} />
+              </MenuItem>
+              <MenuItem value="house">
+                <FormattedMessage {...messages.house} />
+              </MenuItem>
+              <MenuItem value="room">
+                <FormattedMessage {...messages.room} />
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
         <Box display="flex" justifyContent="space-between">
-          <TextField name="minBudget" label={intl.formatMessage(messages.budgetFrom)} type="number" required fullWidth />
+          <TextField
+            name="minBudget"
+            label={intl.formatMessage(messages.budgetFrom)}
+            type="number"
+            required
+            fullWidth
+          />
           <TextField
             name="maxBudget"
             label={intl.formatMessage(messages.budgetTo)}
@@ -208,7 +217,9 @@ const CreateRenter: React.FunctionComponent = () => {
             className="budget-to-input"
           />
           <FormControl className="form-control" fullWidth>
-            <InputLabel id="select-currency-label"><FormattedMessage {...messages.currency} /></InputLabel>
+            <InputLabel id="select-currency-label">
+              <FormattedMessage {...messages.currency} />
+            </InputLabel>
             <Select
               name="currency"
               labelId="select-currency-label"
@@ -223,13 +234,7 @@ const CreateRenter: React.FunctionComponent = () => {
           </FormControl>
         </Box>
         <Box>
-          <TextField
-            name="description"
-            label={intl.formatMessage(messages.description)}
-            multiline
-            fullWidth
-            rows={4}
-          />
+          <TextField name="description" label={intl.formatMessage(messages.description)} multiline fullWidth rows={4} />
         </Box>
         <Box>
           <TextField
@@ -241,33 +246,18 @@ const CreateRenter: React.FunctionComponent = () => {
           />
         </Box>
         <Box>
-          <FormControlLabel
-            control={
-              <Checkbox name="willPayFee" />
-            }
-            label={intl.formatMessage(messages.willPayFee)}
-          />
+          <FormControlLabel control={<Checkbox name="willPayFee" />} label={intl.formatMessage(messages.willPayFee)} />
         </Box>
         <Box display="flex" justifyContent="flex-end">
           <Button variant="contained" onClick={(): void => history.push('/')}>
             <FormattedMessage {...messages.cancel} />
           </Button>
-          <Button
-            disabled={isSendingForm}
-            className="submit-button"
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
+          <Button disabled={isSendingForm} className="submit-button" variant="contained" color="primary" type="submit">
             <FormattedMessage {...messages.submit} />
           </Button>
         </Box>
       </form>
-      <Snackbar
-        open={openAlert}
-        autoHideDuration={6000}
-        onClose={(): void => setOpenAlert(false)}
-      >
+      <Snackbar open={openAlert} autoHideDuration={6000} onClose={(): void => setOpenAlert(false)}>
         <Alert onClose={(): void => setOpenAlert(false)} severity="error">
           <FormattedMessage {...messages.error} />
         </Alert>

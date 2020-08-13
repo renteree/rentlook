@@ -13,13 +13,14 @@ const instance = axios.create({
   },
 });
 
-export const getTenants = async (params: Catalog): Promise<AxiosResponse | void> => {
+export const getTenants = async (params: Catalog): Promise<AxiosResponse | null> => {
   try {
     return instance.get('/tenants', {
       params,
     });
   } catch (e) {
-    return reportError(e);
+    reportError(e);
+    return null;
   }
 };
 

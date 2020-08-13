@@ -7,9 +7,7 @@ const formatTranslationMessages = (locale: string, messages: any): any => {
 
   return messageKeys.reduce((formattedMessages, key) => {
     const isDefaultFormattedMessage = !messages[key];
-    const formattedMessage = isDefaultFormattedMessage
-      ? defaultFormattedMessages[key]
-      : messages[key];
+    const formattedMessage = isDefaultFormattedMessage ? defaultFormattedMessages[key] : messages[key];
 
     return Object.assign(formattedMessages, { [key]: formattedMessage });
   }, {});

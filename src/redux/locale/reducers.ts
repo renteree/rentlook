@@ -30,5 +30,7 @@ export const changeLanguage = (
  * Combined reducer for RentersState with pairs of corresponding action and reducers
  */
 
-export const localeReducer = createReducer<LocaleState, ActionTypes>(initialState)
-  .handleAction(Actions.changeLanguageAction, changeLanguage);
+export const localeReducer = createReducer<LocaleState, ActionTypes>(initialState).handleAction(
+  Actions.changeLanguageAction,
+  changeLanguage,
+);
