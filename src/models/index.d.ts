@@ -31,7 +31,7 @@ declare namespace Models {
     minBudget: number;
     maxBudget: number;
     willPayFee: boolean;
-    housingType: string;
+    housingType: 'room' | 'flat' | 'house';
     currency: string;
     createdAt?: Date;
     image?: Image | null;

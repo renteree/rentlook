@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Container,
   CardMedia,
@@ -8,14 +9,16 @@ import {
   Box,
   Typography,
   SvgIcon,
-  Grid,
   Tooltip,
   Link,
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
 import { getTenant } from '~/api/coreApi';
 import messages from '~/components/Renter/messages';
+import commonMessages from '~/common/messages';
 
 import Renter = Models.Renter;
 
@@ -26,6 +29,8 @@ interface MatchParams {
 type Props = RouteComponentProps<MatchParams>;
 
 const DESCRIPTION_LINE_HEIGHT = 24;
+
+type housingType = 'room' | 'flat' | 'house';
 
 const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props>) => {
   const intl = useIntl();
@@ -42,141 +47,155 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
     setIsLoading(false);
   };
 
+  let budgetDiff = 0;
+  if (tenantAd) {
+    const diff = tenantAd.maxBudget - tenantAd.minBudget;
+    budgetDiff = diff > 0 ? diff : budgetDiff;
+  }
+
   React.useEffect(() => {
     downloadTenantAd();
   }, []);
 
+  const housing: housingType = tenantAd?.housingType || 'flat';
+
   return (
     <Container id="renter-page">
-      <Box>
+      <Box mt={2}>
         <Typography variant="h4">
           {isLoading ? <Skeleton width={400} /> : tenantAd?.title}
         </Typography>
       </Box>
       <Box mt={2}>
-        <Box display="flex">
-          <Card className="main-card">
+        <Card>
+          <Box display="flex">
             {isLoading ? <Skeleton variant="rect" width={150} height={150} /> : (
-              <CardMedia
-                component="img"
-                alt="Tenant social avatar"
-                image={tenantAd?.image?.url}
-                title="Tenant social avatar"
-              />
+              <>
+                {tenantAd?.image?.url ? (
+                  <Box maxWidth={150} maxHeight={200}>
+                    <CardMedia
+                      component="img"
+                      alt="Tenant social avatar"
+                      image={tenantAd?.image?.url}
+                      title="Tenant social avatar"
+                    />
+                  </Box>
+                  ) : <AccountCircle color="disabled" className="avatar-icon" />}
+              </>
             )}
-          </Card>
-          <Box ml={2} mt={2}>
-            <Typography variant="h5" paragraph>
-              {isLoading ? <Skeleton width={200} /> : tenantAd?.user.name}
-            </Typography>
-            <Typography variant="subtitle2" paragraph>
-              {isLoading ? <Skeleton width={150} /> : tenantAd?.user.phone}
-            </Typography>
-            {isLoading && <Skeleton width={150} />}
-            {!!tenantAd?.user?.social && (
-              <Typography variant="subtitle2" paragraph>
-                <Link href={tenantAd.user.social}>
-                  {tenantAd.user.social}
-                </Link>
-              </Typography>
-            )}
+            <Box ml={2} mt={2} display="flex" flexDirection="column" justifyContent="space-between">
+              <Box>
+                <Typography variant="h5" paragraph>
+                  {isLoading ? <Skeleton width={200} /> : tenantAd?.user.name}
+                </Typography>
+                <Typography variant="subtitle2" paragraph>
+                  {isLoading ? <Skeleton width={150} /> : <Link href={`tel:${tenantAd?.user.phone}`}>{tenantAd?.user.phone}</Link>}
+                </Typography>
+              </Box>
+              <Box mb={1}>
+                <>
+                  {isLoading && <Skeleton width={150} />}
+                  {!!tenantAd?.user?.social && (
+                  <Typography variant="subtitle2">
+                    <Link href={tenantAd.user.social} target="_blank" rel="noopener noreferrer">
+                      {tenantAd.user.social}
+                    </Link>
+                  </Typography>
+                  )}
+                </>
+              </Box>
+            </Box>
           </Box>
-        </Box>
-        <Grid container>
-          <Grid container direction="row" className="row-grid">
-            <Grid item xs={1}>
+        </Card>
+        <Box p={2}>
+          <Box display="flex" alignItems="center" pb={1}>
+            <Box flex={2}>
               <Typography variant="subtitle2">
                 <FormattedMessage {...messages.where} />
               </Typography>
-            </Grid>
-            <Grid item xs={11}>
+            </Box>
+            <Box flex={8}>
               <Typography variant="subtitle1">
                 {isLoading ? <Skeleton width={200} /> : `${tenantAd?.location.city}, ${tenantAd?.location.country}`}
               </Typography>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" className="row-grid">
-            <Grid item xs={1}>
+            </Box>
+          </Box>
+          <Box display="flex" alignItems="center" pb={1}>
+            <Box flex={2}>
               <Typography variant="subtitle2">
                 <FormattedMessage {...messages.what} />
               </Typography>
-            </Grid>
-            <Grid item xs={11}>
+            </Box>
+            <Box flex={8}>
               <Typography variant="subtitle1">
-                {isLoading ? <Skeleton width={50} /> : tenantAd?.housingType}
+                {isLoading
+                  ? <Skeleton width={50} />
+                  : <FormattedMessage {...commonMessages[housing]} />}
               </Typography>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" className="row-grid">
-            <Grid item xs={1}>
+            </Box>
+          </Box>
+          <Box display="flex" alignItems="center" pb={1}>
+            <Box flex={2}>
               <Typography variant="subtitle2">
                 <FormattedMessage {...messages.howMuch} />
               </Typography>
-            </Grid>
-            <Grid item xs={11}>
+            </Box>
+            <Box flex={8}>
               <Typography variant="subtitle1">
-                {isLoading ? <Skeleton width={200} /> : `${tenantAd?.minBudget} - ${tenantAd?.maxBudget} ${tenantAd?.currency}`}
+                {isLoading ? <Skeleton width={200} /> : `${tenantAd?.minBudget} ${tenantAd?.currency} (${budgetDiff} ${tenantAd?.currency})`}
                 {tenantAd?.willPayFee && (
                   <Tooltip title={intl.formatMessage(messages.feeTooltip)} placement="top">
                     <SvgIcon htmlColor="green" className="icon-fee"> <HowToRegIcon /></SvgIcon>
                   </Tooltip>
                 )}
               </Typography>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" className="row-grid">
-            <Grid item xs={1}>
+            </Box>
+          </Box>
+          <Box display="flex" alignItems="center" pb={1}>
+            <Box flex={2}>
               <Typography variant="subtitle2">
                 <FormattedMessage {...messages.who} />
               </Typography>
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="body1">
+            </Box>
+            <Box flex={8}>
+              <Typography variant="subtitle1">
                 <Box
                   p={1}
                   border={1}
                   borderRadius={5}
-                  maxWidth={500}
+                  borderColor="grey.500"
                   minHeight={DESCRIPTION_LINE_HEIGHT * 3}
                 >
                   {isLoading ? (
-                    <>
-                      <Skeleton width={500} />
-                      <Skeleton width={500} />
-                      <Skeleton width={500} />
-                    </>
+                    [...Array(3)].map(() => <Skeleton key={uuidv4()} />)
                   ) : tenantAd?.tenantsDescription}
                 </Box>
               </Typography>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" className="row-grid">
-            <Grid item xs={1}>
+            </Box>
+          </Box>
+          <Box display="flex" alignItems="center" pb={1}>
+            <Box flex={2}>
               <Typography variant="subtitle2">
                 <FormattedMessage {...messages.details} />
               </Typography>
-            </Grid>
-            <Grid item xs={11}>
-              <Typography variant="body1">
+            </Box>
+            <Box flex={8}>
+              <Typography variant="subtitle1">
                 <Box
                   p={1}
                   border={1}
                   borderRadius={5}
+                  borderColor="grey.500"
                   minHeight={DESCRIPTION_LINE_HEIGHT * 3}
-                  maxWidth={500}
                 >
                   {isLoading ? (
-                    <>
-                      <Skeleton width={500} />
-                      <Skeleton width={500} />
-                      <Skeleton width={500} />
-                    </>
+                    [...Array(3)].map(() => <Skeleton key={uuidv4()} />)
                   ) : tenantAd?.description}
                 </Box>
               </Typography>
-            </Grid>
-          </Grid>
-        </Grid>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Container>
   );

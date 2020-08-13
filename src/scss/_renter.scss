@@ -1,11 +1,12 @@
 @import 'variables';
 
 #renter-page {
-  .main-card {
-    max-width: 150px;
-  }
+  margin-left: 0;
+  max-width: $container-size;
+  padding: 10px;
 
   .row-grid {
+    align-items: center;
     padding: 10px 0;
   }
 
@@ -13,5 +14,9 @@
     cursor: pointer;
     margin-left: 10px;
     vertical-align: middle;
+  }
+
+  .avatar-icon {
+    font-size: 150px;
   }
 }

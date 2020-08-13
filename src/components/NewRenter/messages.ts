@@ -38,12 +38,12 @@ export default defineMessages({
   },
   budgetFrom: {
     id: 'NewRenter.CreateRenter.budgetFrom',
-    defaultMessage: 'Budget from',
+    defaultMessage: 'Optimal budget',
     description: 'Tenant budget from',
   },
   budgetTo: {
     id: 'NewRenter.CreateRenter.budgetTo',
-    defaultMessage: 'Budget to',
+    defaultMessage: 'Max budget',
     description: 'Tenant budget to',
   },
   willPayFee: {
@@ -63,8 +63,7 @@ export default defineMessages({
   },
   flat: {
     id: 'NewRenter.CreateRenter.flat',
-    defaultMessage: 'Flat',
-    description: 'Flat',
+    defaultMessage: 'Apartment',
   },
   house: {
     id: 'NewRenter.CreateRenter.house',
@@ -90,6 +89,10 @@ export default defineMessages({
     id: 'NewRenter.CreateRenter.notValidNumber',
     defaultMessage: 'Not a valid number',
     description: 'Not a valid number',
+  },
+  notValidSocial: {
+    id: 'NewRenter.CreateRenter.notValidSocial',
+    defaultMessage: 'This link to social network is not supported',
   },
   error: {
     id: 'NewRenter.CreateRenter.error',
