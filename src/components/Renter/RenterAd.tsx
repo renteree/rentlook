@@ -2,16 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  Container,
-  CardMedia,
-  Card,
-  Box,
-  Typography,
-  SvgIcon,
-  Tooltip,
-  Link,
-} from '@material-ui/core';
+import { Container, CardMedia, Card, Box, Typography, SvgIcon, Tooltip, Link } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -37,7 +28,11 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
   const [tenantAd, setTenantAd] = React.useState<Renter | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const { match: { params: { id } } } = props;
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
 
   const downloadTenantAd = async () => {
     const result = await getTenant(id);
@@ -62,14 +57,14 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
   return (
     <Container id="renter-page">
       <Box mt={2}>
-        <Typography variant="h4">
-          {isLoading ? <Skeleton width={400} /> : tenantAd?.title}
-        </Typography>
+        <Typography variant="h4">{isLoading ? <Skeleton width={400} /> : tenantAd?.title}</Typography>
       </Box>
       <Box mt={2}>
         <Card>
           <Box display="flex">
-            {isLoading ? <Skeleton variant="rect" width={150} height={150} /> : (
+            {isLoading ? (
+              <Skeleton variant="rect" width={150} height={150} />
+            ) : (
               <>
                 {tenantAd?.image?.url ? (
                   <Box maxWidth={150} maxHeight={200}>
@@ -80,7 +75,9 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
                       title="Tenant social avatar"
                     />
                   </Box>
-                  ) : <AccountCircle color="disabled" className="avatar-icon" />}
+                ) : (
+                  <AccountCircle color="disabled" className="avatar-icon" />
+                )}
               </>
             )}
             <Box ml={2} mt={2} display="flex" flexDirection="column" justifyContent="space-between">
@@ -89,18 +86,22 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
                   {isLoading ? <Skeleton width={200} /> : tenantAd?.user.name}
                 </Typography>
                 <Typography variant="subtitle2" paragraph>
-                  {isLoading ? <Skeleton width={150} /> : <Link href={`tel:${tenantAd?.user.phone}`}>{tenantAd?.user.phone}</Link>}
+                  {isLoading ? (
+                    <Skeleton width={150} />
+                  ) : (
+                    <Link href={`tel:${tenantAd?.user.phone}`}>{tenantAd?.user.phone}</Link>
+                  )}
                 </Typography>
               </Box>
               <Box mb={1}>
                 <>
                   {isLoading && <Skeleton width={150} />}
                   {!!tenantAd?.user?.social && (
-                  <Typography variant="subtitle2">
-                    <Link href={tenantAd.user.social} target="_blank" rel="noopener noreferrer">
-                      {tenantAd.user.social}
-                    </Link>
-                  </Typography>
+                    <Typography variant="subtitle2">
+                      <Link href={tenantAd.user.social} target="_blank" rel="noopener noreferrer">
+                        {tenantAd.user.social}
+                      </Link>
+                    </Typography>
                   )}
                 </>
               </Box>
@@ -128,9 +129,7 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
             </Box>
             <Box flex={8}>
               <Typography variant="subtitle1">
-                {isLoading
-                  ? <Skeleton width={50} />
-                  : <FormattedMessage {...commonMessages[housing]} />}
+                {isLoading ? <Skeleton width={50} /> : <FormattedMessage {...commonMessages[housing]} />}
               </Typography>
             </Box>
           </Box>
@@ -142,10 +141,17 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
             </Box>
             <Box flex={8}>
               <Typography variant="subtitle1">
-                {isLoading ? <Skeleton width={200} /> : `${tenantAd?.minBudget} ${tenantAd?.currency} (${budgetDiff} ${tenantAd?.currency})`}
+                {isLoading ? (
+                  <Skeleton width={200} />
+                ) : (
+                  `${tenantAd?.minBudget} ${tenantAd?.currency} (${budgetDiff} ${tenantAd?.currency})`
+                )}
                 {tenantAd?.willPayFee && (
                   <Tooltip title={intl.formatMessage(messages.feeTooltip)} placement="top">
-                    <SvgIcon htmlColor="green" className="icon-fee"> <HowToRegIcon /></SvgIcon>
+                    <SvgIcon htmlColor="green" className="icon-fee">
+                      {' '}
+                      <HowToRegIcon />
+                    </SvgIcon>
                   </Tooltip>
                 )}
               </Typography>
@@ -159,16 +165,8 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
             </Box>
             <Box flex={8}>
               <Typography variant="subtitle1">
-                <Box
-                  p={1}
-                  border={1}
-                  borderRadius={5}
-                  borderColor="grey.500"
-                  minHeight={DESCRIPTION_LINE_HEIGHT * 3}
-                >
-                  {isLoading ? (
-                    [...Array(3)].map(() => <Skeleton key={uuidv4()} />)
-                  ) : tenantAd?.tenantsDescription}
+                <Box p={1} border={1} borderRadius={5} borderColor="grey.500" minHeight={DESCRIPTION_LINE_HEIGHT * 3}>
+                  {isLoading ? [...Array(3)].map(() => <Skeleton key={uuidv4()} />) : tenantAd?.tenantsDescription}
                 </Box>
               </Typography>
             </Box>
@@ -181,16 +179,8 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
             </Box>
             <Box flex={8}>
               <Typography variant="subtitle1">
-                <Box
-                  p={1}
-                  border={1}
-                  borderRadius={5}
-                  borderColor="grey.500"
-                  minHeight={DESCRIPTION_LINE_HEIGHT * 3}
-                >
-                  {isLoading ? (
-                    [...Array(3)].map(() => <Skeleton key={uuidv4()} />)
-                  ) : tenantAd?.description}
+                <Box p={1} border={1} borderRadius={5} borderColor="grey.500" minHeight={DESCRIPTION_LINE_HEIGHT * 3}>
+                  {isLoading ? [...Array(3)].map(() => <Skeleton key={uuidv4()} />) : tenantAd?.description}
                 </Box>
               </Typography>
             </Box>

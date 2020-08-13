@@ -27,7 +27,8 @@ export default defineMessages({
   },
   projectDescription: {
     id: 'SideBar.SideBar.projectDescription',
-    defaultMessage: 'Renteree is a place where you can post about the search for an apartment or house. Landlords or realtors can find anyone interested in their real estate',
+    defaultMessage:
+      'Renteree is a place where you can post about the search for an apartment or house. Landlords or realtors can find anyone interested in their real estate',
     description: 'Small text in the main page about the project',
   },
   projectFirstStep: {

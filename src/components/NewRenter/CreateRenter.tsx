@@ -43,10 +43,7 @@ type ValidationType = {
 
 const CreateRenter: React.FunctionComponent = () => {
   const intl = useIntl();
-  const [
-    validationForm,
-    setValidationForm,
-  ] = React.useState<ValidationType>(defaultValidationForm);
+  const [validationForm, setValidationForm] = React.useState<ValidationType>(defaultValidationForm);
   const [locationValue, setLocationValue] = React.useState<PlaceType | null>(null);
   const [isSendingForm, setIsSendingForm] = React.useState<boolean>(false);
   const [openAlert, setOpenAlert] = React.useState<boolean>(false);
@@ -109,7 +106,7 @@ const CreateRenter: React.FunctionComponent = () => {
     const reader = new FileReader();
     if (event?.target?.files?.length) {
       const file = event.target.files[0];
-      reader.onload = function () {
+      reader.onload = () => {
         setAvatarUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
@@ -138,13 +135,10 @@ const CreateRenter: React.FunctionComponent = () => {
             />
             <Button component="span">
               {avatarUrl ? (
-                <Avatar
-                  className="avatar"
-                  alt="Tenant social avatar"
-                  src={avatarUrl}
-                  title="Tenant social avatar"
-                />
-              ) : <AccountCircle color="disabled" className="avatar-icon" />}
+                <Avatar className="avatar" alt="Tenant social avatar" src={avatarUrl} title="Tenant social avatar" />
+              ) : (
+                <AccountCircle color="disabled" className="avatar-icon" />
+              )}
             </Button>
           </label>
           <Box>
@@ -220,12 +214,8 @@ const CreateRenter: React.FunctionComponent = () => {
             <InputLabel id="select-currency-label">
               <FormattedMessage {...messages.currency} />
             </InputLabel>
-            <Select
-              name="currency"
-              labelId="select-currency-label"
-              defaultValue="USD"
-            >
-              {(Object.values(currency)).map(item => (
+            <Select name="currency" labelId="select-currency-label" defaultValue="USD">
+              {Object.values(currency).map(item => (
                 <MenuItem key={uuidv4()} value={item}>
                   {item}
                 </MenuItem>

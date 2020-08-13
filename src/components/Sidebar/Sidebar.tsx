@@ -110,9 +110,7 @@ const Sidebar: React.FC = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              {title
-                ? <FormattedMessage {...title} />
-                : <FormattedMessage {...messages.renteree} />}
+              {title ? <FormattedMessage {...title} /> : <FormattedMessage {...messages.renteree} />}
             </Typography>
           </Box>
           <Box>
