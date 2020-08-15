@@ -24,8 +24,9 @@ import Typography from '@material-ui/core/Typography';
 
 // Localization
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import { useSelector } from 'react-redux';
-import messages from '~/components/NewRenter/messages';
+import messages from './messages';
 import { arrayWithAllLanguages } from '~/redux/locale/types';
 import { getLanguage } from '~/redux/locale/selectors';
 import useAction from '~/hooks/useAction';
@@ -34,9 +35,10 @@ import { changeLanguageAction } from '~/redux/locale/actions';
 const pageNames = {
   '/': messages.catalog,
   '/create': messages.newRenter,
+  '/ad': messages.renter,
 };
 
-type Path = '/' | '/create' | undefined;
+type Path = '/' | '/create' | '/ad' | undefined;
 
 const Sidebar: React.FC = () => {
   const intl = useIntl();
@@ -45,7 +47,8 @@ const Sidebar: React.FC = () => {
   const usersLocale = useSelector(getLanguage);
   const history = useHistory();
   const location = useLocation();
-  const path = location.pathname as Path;
+  let path = location.pathname as Path;
+  if (path?.includes('/ad/')) path = '/ad';
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [title, setTitle] = useState(path ? pageNames[path] : messages.notFound);
@@ -107,7 +110,7 @@ const Sidebar: React.FC = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              <FormattedMessage {...title} />
+              {title ? <FormattedMessage {...title} /> : <FormattedMessage {...messages.renteree} />}
             </Typography>
           </Box>
           <Box>

@@ -1,0 +1,22 @@
+@import 'variables';
+
+#renter-page {
+  margin-left: 0;
+  max-width: $container-width;
+  padding: 10px;
+
+  .row-grid {
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .icon-fee {
+    cursor: pointer;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .avatar-icon {
+    font-size: 150px;
+  }
+}

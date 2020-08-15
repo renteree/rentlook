@@ -19,8 +19,11 @@ const ListingItem = React.forwardRef<HTMLDivElement, Props>(({ item }, ref) => (
     <Box className="item-container">
       <Link to={`/ad/${item.id}`}>
         <Card className="card">
-          {!item.image && <PortraitIcon className="photo-unknown" color="disabled" />}
-          {item.image && <Avatar src={item.image?.url} className="photo-preview" alt={item.user.name} />}
+          {item.avatar ? (
+            <Avatar src={item.avatar} className="photo-preview" alt={item.user.name} />
+          ) : (
+            <PortraitIcon className="photo-unknown" color="disabled" />
+          )}
           <Box display="flex" justifyContent="space-between" flexDirection="row" width="100%">
             <Box display="flex" flexDirection="column" justifyContent="center" ml={2}>
               <Typography variant="subtitle2">{item.user.name}</Typography>

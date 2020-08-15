@@ -5,7 +5,7 @@ import Sidebar from '~/components/Sidebar/Sidebar';
 import Catalog from '../components/Catalog/Catalog';
 import NotFound from '~/components/NotFound/NotFound';
 import CreateRenter from '~/components/NewRenter/CreateRenter';
-import Renter from '~/components/Renter/Renter';
+import RenterAd from '~/components/Renter/RenterAd';
 
 const App: React.FunctionComponent = () => (
   <div className="root">
@@ -15,7 +15,7 @@ const App: React.FunctionComponent = () => (
       <Switch>
         <Route exact path="/" component={Catalog} />
         <Route exact path="/create" component={CreateRenter} />
-        <Route exact path="/ad/:id" component={Renter} />
+        <Route exact path="/ad/:id" component={RenterAd} />
         <Route path="/" component={NotFound} />
       </Switch>
     </main>
