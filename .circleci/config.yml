@@ -2,9 +2,10 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1.6
+  heroku: circleci/heroku@1.2.0
 
 jobs:
-  lint_and_test:
+  lint_test_build:
     executor:
       name: node/default
     steps:
@@ -24,7 +25,46 @@ jobs:
                 name: Run Build
                 command: npm i parcel && npm run build
 
+  docker_build_push_deploy:
+    executor: heroku/default
+    steps:
+      - heroku/install
+      - heroku/check-authentication
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push a docker image
+          description: Replacement of orb command heroku/push-docker-image because of its syntax error
+          command: |
+            heroku container:login
+            heroku container:push -a $HEROKU_CLIENT_APP_NAME web
+      - heroku/release-docker-image:
+          app-name: $HEROKU_CLIENT_APP_NAME
+          process-types: web
+
 workflows:
   build:
     jobs:
-      - lint_and_test
+      - lint_test_build
+      - docker_build_push_deploy:
+          name: master_auto_deploy
+          context: renteree
+          requires:
+            - lint_test_build
+          filters:
+            branches:
+              only:
+                - master
+      - deployment_approval:
+          type: approval
+          requires:
+            - lint_test_build
+          filters:
+            branches:
+              ignore:
+                - master
+      - docker_build_push_deploy:
+          name: optional_deploy
+          context: renteree
+          requires:
+            - deployment_approval
