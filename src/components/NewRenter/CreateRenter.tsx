@@ -12,11 +12,14 @@ import {
   FormControl,
   Button,
   Snackbar,
+  Avatar,
 } from '@material-ui/core';
 import { AutocompleteRenderInputParams } from '@material-ui/lab/Autocomplete';
 import Alert from '@material-ui/lab/Alert';
 import { useIntl, FormattedMessage } from 'react-intl';
 import phone from 'phone';
+import { v4 as uuidv4 } from 'uuid';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 // Locale
 import messages from './messages';
@@ -26,29 +29,44 @@ import { postTenants } from '~/api/coreApi';
 import GoogleAutocomplete from './GoogleAutocomplete';
 import { currency } from '~/common/enums';
 
-import Renter = Models.Renter;
 import PlaceType = Models.PlaceType;
 
-const defaultValidationForm = {
+type ValidationType = {
+  phone: string;
+  social: string;
+};
+
+const defaultValidationForm: ValidationType = {
   phone: '',
+  social: '',
 };
 
 const CreateRenter: React.FunctionComponent = () => {
   const intl = useIntl();
-  const [validationForm, setValidationForm] = React.useState<{ phone: string }>(defaultValidationForm);
+  const [validationForm, setValidationForm] = React.useState<ValidationType>(defaultValidationForm);
   const [locationValue, setLocationValue] = React.useState<PlaceType | null>(null);
   const [isSendingForm, setIsSendingForm] = React.useState<boolean>(false);
   const [openAlert, setOpenAlert] = React.useState<boolean>(false);
+  const [avatarUrl, setAvatarUrl] = React.useState<string>('');
 
   const history = useHistory();
 
   const validateForm = (formData: FormData): boolean => {
     let isValid = true;
+    const reg = /^(?:https?:\/\/)(?:www\.)?(?:vk\.com\/.|facebook\.com\/.|instagram\.com\/.|linkedin\.com\/.)/;
+
     const phoneNumberData = phone(formData.get('phone') as string);
     if (!phoneNumberData.length) {
       setValidationForm({ ...validationForm, phone: intl.formatMessage(messages.notValidNumber) });
       isValid = false;
     }
+
+    const social = formData.get('social') as string;
+    if (social && !social.match(reg)) {
+      setValidationForm({ ...validationForm, social: intl.formatMessage(messages.notValidSocial) });
+      isValid = false;
+    }
+
     return isValid;
   };
 
@@ -59,35 +77,19 @@ const CreateRenter: React.FunctionComponent = () => {
     const formData = new FormData(event.currentTarget);
 
     const isValid = validateForm(formData);
-    if (!isValid) return;
+    if (!isValid) {
+      setIsSendingForm(false);
+      return;
+    }
 
-    const phoneNumberData = phone(formData.get('phone') as string);
-    const body: Renter = {
-      name: formData.get('name') as string,
-      phone: phoneNumberData[0],
-      title: formData.get('title') as string,
-      country: locationValue?.structured_formatting.secondary_text as string,
-      city: locationValue?.structured_formatting.main_text as string,
-      cityId: locationValue?.place_id as string,
-      minBudget: Number(formData.get('minBudget') as string),
-      maxBudget: Number(formData.get('maxBudget') as string),
-      willPayFee: (formData.get('willPayFee') as string) !== null,
-      housingType: formData.get('housingType') as string,
-      currency: formData.get('currency') as string,
-    };
-
-    if (formData.get('social')) {
-      body.social = formData.get('social') as string;
-    }
-    if (formData.get('description')) {
-      body.description = formData.get('description') as string;
-    }
-    if (formData.get('tenantsDescription')) {
-      body.tenantsDescription = formData.get('tenantsDescription') as string;
-    }
+    formData.set('phone', phone(formData.get('phone') as string)[0]);
+    formData.append('country', locationValue?.structured_formatting.secondary_text as string);
+    formData.append('city', locationValue?.structured_formatting.main_text as string);
+    formData.append('cityId', locationValue?.place_id as string);
+    formData.set('willPayFee', (formData.get('willPayFee') as string) !== null ? 'true' : 'false');
 
     try {
-      const response = await postTenants(body);
+      const response = await postTenants(formData);
       if (response) {
         history.push(`/ad/${response.data.id}`);
       } else {
@@ -100,22 +102,72 @@ const CreateRenter: React.FunctionComponent = () => {
     }
   };
 
+  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    if (event?.target?.files?.length) {
+      const file = event.target.files[0];
+      reader.onload = () => {
+        setAvatarUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <Container maxWidth="sm" id="new-renter-page">
+    <Container id="new-renter-page">
       <form onSubmit={handleSubmit} onChange={(): void => setValidationForm(defaultValidationForm)}>
-        <TextField name="title" label={intl.formatMessage(messages.title)} fullWidth required />
+        <TextField
+          name="title"
+          label={intl.formatMessage(messages.title)}
+          fullWidth
+          required
+          inputProps={{ maxLength: 70, minLength: 5 }}
+        />
         <Box display="flex" justifyContent="space-between">
-          <TextField name="name" label={intl.formatMessage(messages.userName)} required fullWidth />
-          <TextField
-            error={!!validationForm.phone}
-            name="phone"
-            label={intl.formatMessage(messages.userPhone)}
-            required
-            helperText={validationForm.phone}
-            className="phone-input"
-            fullWidth
-          />
-          <TextField name="social" label={intl.formatMessage(messages.social)} fullWidth />
+          <label htmlFor="contained-button-file">
+            <input
+              name="file"
+              className="input-avatar"
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+              onChange={handleImage}
+            />
+            <Button component="span">
+              {avatarUrl ? (
+                <Avatar className="avatar" alt="Tenant social avatar" src={avatarUrl} title="Tenant social avatar" />
+              ) : (
+                <AccountCircle color="disabled" className="avatar-icon" />
+              )}
+            </Button>
+          </label>
+          <Box>
+            <TextField
+              name="name"
+              label={intl.formatMessage(messages.userName)}
+              required
+              fullWidth
+              autoComplete="name"
+              inputProps={{ minLength: 2 }}
+            />
+            <TextField
+              error={!!validationForm.phone}
+              name="phone"
+              label={intl.formatMessage(messages.userPhone)}
+              required
+              helperText={validationForm.phone}
+              fullWidth
+              autoComplete="tel"
+            />
+            <TextField
+              name="social"
+              label={intl.formatMessage(messages.social)}
+              fullWidth
+              helperText={validationForm.social || 'Fb, In, Vk or Instagram'}
+              error={!!validationForm.social}
+              autoComplete="url"
+            />
+          </Box>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <GoogleAutocomplete
@@ -164,7 +216,9 @@ const CreateRenter: React.FunctionComponent = () => {
             </InputLabel>
             <Select name="currency" labelId="select-currency-label" defaultValue="USD">
               {Object.values(currency).map(item => (
-                <MenuItem value={item}>{item}</MenuItem>
+                <MenuItem key={uuidv4()} value={item}>
+                  {item}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>

@@ -1,13 +1,13 @@
 @import 'variables';
 
 #new-renter-page {
+  margin-left: 0;
+  max-width: $container-width;
+  padding: 10px;
+
   .form-control {
     margin-left: $sp-m;
-    max-width: 100px;
-  }
-
-  .phone-input {
-    margin: 0 $sp-m;
+    max-width: 120px;
   }
 
   .budget-to-input {
@@ -16,5 +16,18 @@
 
   .submit-button {
     margin-left: $sp-m;
+  }
+
+  .input-avatar {
+    display: none;
+  }
+
+  .avatar-icon {
+    font-size: 150px;
+  }
+
+  .avatar {
+    height: 150px;
+    width: 150px;
   }
 }
