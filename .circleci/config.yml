@@ -37,7 +37,7 @@ jobs:
           description: Replacement of orb command heroku/push-docker-image because of its syntax error
           command: |
             heroku container:login
-            heroku container:push -a $HEROKU_CLIENT_APP_NAME web
+            heroku container:push -a $HEROKU_CLIENT_APP_NAME web --arg REACT_APP_API_URL=$REACT_APP_API_URL,REACT_APP_GOOGLE_PLACES_API=$REACT_APP_GOOGLE_PLACES_API
       - heroku/release-docker-image:
           app-name: $HEROKU_CLIENT_APP_NAME
           process-types: web

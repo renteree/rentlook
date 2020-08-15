@@ -3,6 +3,9 @@ FROM node:12.16.1-alpine as build
 
 ADD . /build
 
+ARG REACT_APP_API_URL
+ARG REACT_APP_GOOGLE_PLACES_API
+
 WORKDIR /build
 
 RUN npm ci && \
