@@ -21,18 +21,18 @@ type Props = RouteComponentProps<MatchParams>;
 
 const DESCRIPTION_LINE_HEIGHT = 24;
 
-type housingType = 'room' | 'flat' | 'house';
+type HousingType = 'room' | 'flat' | 'house';
 
 const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props>) => {
-  const intl = useIntl();
-  const [tenantAd, setTenantAd] = React.useState<Renter | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-
   const {
     match: {
       params: { id },
     },
   } = props;
+
+  const intl = useIntl();
+  const [tenantAd, setTenantAd] = React.useState<Renter | null>(null);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const downloadTenantAd = async () => {
     const result = await getTenant(id);
@@ -52,7 +52,15 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
     downloadTenantAd();
   }, []);
 
-  const housing: housingType = tenantAd?.housingType || 'flat';
+  const housing: HousingType = tenantAd?.housingType || 'flat';
+
+  const renderAvatar = tenantAd?.avatar ? (
+    <Box maxWidth={150} maxHeight={200}>
+      <CardMedia component="img" alt="Tenant social avatar" image={tenantAd.avatar} title="Tenant social avatar" />
+    </Box>
+  ) : (
+    <AccountCircle color="disabled" className="avatar-icon" />
+  );
 
   return (
     <Container id="renter-page">
@@ -62,24 +70,7 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
       <Box mt={2}>
         <Card>
           <Box display="flex">
-            {isLoading ? (
-              <Skeleton variant="rect" width={150} height={150} />
-            ) : (
-              <>
-                {tenantAd?.image?.url ? (
-                  <Box maxWidth={150} maxHeight={200}>
-                    <CardMedia
-                      component="img"
-                      alt="Tenant social avatar"
-                      image={tenantAd?.image?.url}
-                      title="Tenant social avatar"
-                    />
-                  </Box>
-                ) : (
-                  <AccountCircle color="disabled" className="avatar-icon" />
-                )}
-              </>
-            )}
+            {isLoading ? <Skeleton variant="rect" width={150} height={150} /> : renderAvatar}
             <Box ml={2} mt={2} display="flex" flexDirection="column" justifyContent="space-between">
               <Box>
                 <Typography variant="h5" paragraph>

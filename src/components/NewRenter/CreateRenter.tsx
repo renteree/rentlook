@@ -31,14 +31,14 @@ import { currency } from '~/common/enums';
 
 import PlaceType = Models.PlaceType;
 
-const defaultValidationForm = {
-  phone: '',
-  social: '',
-};
-
 type ValidationType = {
   phone: string;
   social: string;
+};
+
+const defaultValidationForm: ValidationType = {
+  phone: '',
+  social: '',
 };
 
 const CreateRenter: React.FunctionComponent = () => {
@@ -53,7 +53,7 @@ const CreateRenter: React.FunctionComponent = () => {
 
   const validateForm = (formData: FormData): boolean => {
     let isValid = true;
-    const reg = /^(?:https?:\/\/)(?:www\.)?(?:github\.com\/.|twitter\.com\/.|vk\.com\/.|facebook\.com\/.|instagram\.com\/.)/;
+    const reg = /^(?:https?:\/\/)(?:www\.)?(?:vk\.com\/.|facebook\.com\/.|instagram\.com\/.|linkedin\.com\/.)/;
 
     const phoneNumberData = phone(formData.get('phone') as string);
     if (!phoneNumberData.length) {
@@ -82,11 +82,11 @@ const CreateRenter: React.FunctionComponent = () => {
       return;
     }
 
-    formData.append('phone', phone(formData.get('phone') as string)[0]);
+    formData.set('phone', phone(formData.get('phone') as string)[0]);
     formData.append('country', locationValue?.structured_formatting.secondary_text as string);
     formData.append('city', locationValue?.structured_formatting.main_text as string);
     formData.append('cityId', locationValue?.place_id as string);
-    formData.append('willPayFee', (formData.get('willPayFee') as string) !== null ? 'true' : 'false');
+    formData.set('willPayFee', (formData.get('willPayFee') as string) !== null ? 'true' : 'false');
 
     try {
       const response = await postTenants(formData);
@@ -163,7 +163,7 @@ const CreateRenter: React.FunctionComponent = () => {
               name="social"
               label={intl.formatMessage(messages.social)}
               fullWidth
-              helperText={validationForm.social || 'Example: https://facebook/renteree'}
+              helperText={validationForm.social || 'Fb, In, Vk or Instagram'}
               error={!!validationForm.social}
               autoComplete="url"
             />
