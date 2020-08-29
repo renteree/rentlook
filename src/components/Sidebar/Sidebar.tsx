@@ -21,6 +21,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 // Localization
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -95,7 +97,7 @@ const Sidebar: React.FC = () => {
   );
 
   return (
-    <>
+    <Box id="side-bar-component">
       <CssBaseline />
       {/* Upper header */}
       <AppBar position="fixed" className="app-bar">
@@ -114,16 +116,18 @@ const Sidebar: React.FC = () => {
             </Typography>
           </Box>
           <Box>
-            <select
+            <Select
+              className="select-text"
+              defaultValue={arrayWithAllLanguages[0]}
               onChange={(event): void => {
                 changeLanguage(event.target.value);
               }}>
               {arrayWithAllLanguages.map(language => (
-                <option value={language} key={language}>
+                <MenuItem value={language} key={language}>
                   {language}
-                </option>
+                </MenuItem>
               ))}
-            </select>
+            </Select>
           </Box>
         </Toolbar>
       </AppBar>
@@ -157,7 +161,7 @@ const Sidebar: React.FC = () => {
           </Drawer>
         </Hidden>
       </nav>
-    </>
+    </Box>
   );
 };
 

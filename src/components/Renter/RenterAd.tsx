@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { v4 as uuidv4 } from 'uuid';
-import { Container, CardMedia, Card, Box, Typography, SvgIcon, Tooltip, Link } from '@material-ui/core';
+import { Container, CardMedia, Card, Box, Typography, SvgIcon, Tooltip, Link, Avatar } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -55,9 +55,7 @@ const RenterAd: React.FunctionComponent<Props> = (props: PropsWithChildren<Props
   const housing: HousingType = tenantAd?.housingType || 'flat';
 
   const renderAvatar = tenantAd?.avatar ? (
-    <Box maxWidth={150} maxHeight={200}>
-      <CardMedia component="img" alt="Tenant social avatar" image={tenantAd.avatar} title="Tenant social avatar" />
-    </Box>
+    <Avatar className="avatar" alt="Tenant avatar renteree" src={tenantAd.avatar} title="Tenant avatar renteree" />
   ) : (
     <AccountCircle color="disabled" className="avatar-icon" />
   );
